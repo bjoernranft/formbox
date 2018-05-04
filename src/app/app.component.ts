@@ -17,6 +17,7 @@ import { FormDataService } from './services/form-data.service';
 import { Form } from './data/forms/form';
 import { Label } from './data/forms/label';
 import { Button } from './data/forms/button';
+import { FileSystemService } from './services/fs.service';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,8 @@ export class AppComponent implements OnInit {
   @select([ 'template', 'status' ]) templateStatus: Observable<LoadingStatus>;
   @select([ 'absenderliste', 'selected' ]) absender: Observable<Absender>;
 
+  url = '';
+
   constructor(
     private templates: TemplateService,
     private actions: TemplateActions,
@@ -37,11 +40,24 @@ export class AppComponent implements OnInit {
     private storage: StorageService,
     private expressions: ExpressionsService,
     private formdata: FormDataService,
+    private fs: FileSystemService,
     private log: Logger) {
   }
 
   async ngOnInit(): Promise<void> {
     this.log.debug('AppComponent.ngOnInit');
+
+    // wenn eine *.dotx im Bearbeitungsmodus geöffnet wurde existiert eine Url.
+    // Falls eine *.dotx nicht im Bearbeitungsmodus geöffnet wurde (z.B. per Doppelklick)
+    // erzeugt Word ein neues ungespeichertes Dokument, Url ist daher leer und kann zur Unterscheidung
+    // verwendet werden und demnach Dokumentenkommandos ausgeführt werden.
+    this.fs.getFileUrl().then(url => {
+      if (!url) {
+        return;
+      }
+
+      this.actions.getNextCommand();
+    });
 
     if (environment.production) {
       this.storage.open().then(() => {
