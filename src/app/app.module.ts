@@ -2,7 +2,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpModule } from '@angular/http';
+import { HttpModule, BrowserXhr } from '@angular/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DevToolsExtension, NgRedux, NgReduxModule } from '@angular-redux/store';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
@@ -60,6 +60,7 @@ import { BarService } from './services/bar.service';
 import { FormularEditorActions } from './store/actions/formular-editor-actions';
 import { FormularEditorEpics } from './store/middleware/formular-editor-epics';
 import { FormularEditorService } from './services/formular-editor.service';
+import { NgProgressModule, NgProgressBrowserXhr } from 'ngx-progressbar';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { FormularEditorService } from './services/formular-editor.service';
     FormsModule,
     Angular2FontawesomeModule,
     TreeModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgProgressModule
   ],
   providers: [
     { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -119,7 +121,8 @@ import { FormularEditorService } from './services/formular-editor.service';
     BarService,
     FormularEditorActions,
     FormularEditorEpics,
-    FormularEditorService
+    FormularEditorService,
+    { provide: BrowserXhr, useClass: NgProgressBrowserXhr }
   ],
   bootstrap: [AppComponent]
 })
