@@ -336,7 +336,7 @@ export class OfficeService {
 
   /**
    * Erzeugt eine ContentControl um einen Absatz im Dokument.
-   * 
+   *
    * @param title Titel des ContentControls
    * @param tag Tag des ContentControl
    * @param style Name einer Formatvorlage
@@ -355,7 +355,7 @@ export class OfficeService {
 
   /**
    * Gibt den Text, der von einem ContentControl umschlossen wird, zurück.
-   * 
+   *
    * @param id Id des ContentControls
    */
   async getContentControlText(id: number): Promise<string> {
@@ -402,7 +402,7 @@ export class OfficeService {
 
   /**
    * Ersetzt den Text, der von einem ContentControl umschlossen wird.
-   * 
+   *
    * @param id Id des ContentControls
    * @param text Text, der eingefügt werden soll
    */
@@ -480,7 +480,7 @@ export class OfficeService {
    * Gibt eine Liste aller  Content Controls zurück, die nach einem bestimmten
    * Content Control definiert sind. Wird keine Id angegeben, werden alle
    * Content Controls zurückgegeben.
-   * 
+   *
    * @param id Id des Content Controls von dem aus gesucht werden soll.
    */
   async getNextContentControls(id?: number): Promise<{ id: number, title: string, tag: string }[]> {
@@ -514,8 +514,8 @@ export class OfficeService {
   }
 
   /**
-   * Gibt die Range zwischen zwei Content Controls zurück, beginnend 
-   * vor dem ersten Content Control. 
+   * Gibt die Range zwischen zwei Content Controls zurück, beginnend
+   * vor dem ersten Content Control.
    */
   async getRangeBetweenContentControls(id: number, idNext: number): Promise<Word.Range> {
     return Word.run(context => {
@@ -541,9 +541,9 @@ export class OfficeService {
   }
 
   /**
-   * Erzeugt ein Databinding für ein Content Control. Der Titel des Content 
+   * Erzeugt ein Databinding für ein Content Control. Der Titel des Content
    * Controls wird auf eine zufällige Id geändert.
-   * 
+   *
    * @param id Id des Content Controls.
    * @param prefix Präfix, der dem Titel vorangestellt wird.
    */
@@ -562,7 +562,7 @@ export class OfficeService {
 
   /**
    * Löscht ein bestehendes Databinding eines Content Controls.
-   * 
+   *
    * @param id Id des Bindings.
    */
   async deleteBinding(id: string): Promise<void> {
@@ -584,7 +584,7 @@ export class OfficeService {
   /**
    * Erzeugt einen EventHandler für ein bestehendes Binding eines Content
    * Controls.
-   * 
+   *
    * @param id Id des Bindings
    * @param callback Callbackfunktion für BindingDataChanged
    */
@@ -613,7 +613,7 @@ export class OfficeService {
 
   /**
    * Lösche alle EventHandler eines Bindings
-   * 
+   *
    * @param id Id des Bindings.
    */
   async removeEventHandlersFromBinding(id: string): Promise<void> {
@@ -631,6 +631,14 @@ export class OfficeService {
         } else {
           reject('Binding existiert nicht.');
         }
+      });
+    });
+  }
+
+  async getFileUrl(): Promise<string> {
+    return new Promise<string>(resolve => {
+      Office.context.document.getFilePropertiesAsync(result => {
+        resolve(result.value.url);
       });
     });
   }
@@ -888,7 +896,7 @@ export class OfficeService {
 
   /**
    * Versteckt einen Paragraphen.
-   * http://officeopenxml.com/WPparagraph.php 
+   * http://officeopenxml.com/WPparagraph.php
    */
   private hideP = (node: Node) => {
     const doc = node.ownerDocument;
@@ -980,7 +988,7 @@ export class OfficeService {
 
   /**
    * Erzeugt ein Binding für ein benanntes Objekt. Für ein ContentControl
-   * ist der Name der Titel.  
+   * ist der Name der Titel.
    */
   private addBindingFromNamedItem = async (name: string): Promise<string> => {
     return new Promise<string>((resolve, reject) => {

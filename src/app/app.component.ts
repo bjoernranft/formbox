@@ -20,6 +20,7 @@ import { Label } from './data/forms/label';
 import { Button } from './data/forms/button';
 import { FormularEditorActions } from './store/actions/formular-editor-actions';
 import { SachleitendeVerfuegungService } from './services/sachleitende-verfuegung.service';
+import { FileSystemService } from './services/filesystem.service';
 
 @Component({
   selector: 'app-root',
@@ -44,6 +45,7 @@ export class AppComponent implements OnInit {
     private storage: StorageService,
     private expressions: ExpressionsService,
     private formdata: FormDataService,
+    private filesystem: FileSystemService,
     private formularEditorActions: FormularEditorActions,
     private log: Logger) {
   }
@@ -65,6 +67,14 @@ export class AppComponent implements OnInit {
 
     this.templateStatus.subscribe(status => {
       this.log.debug(status);
+    });
+
+    this.filesystem.getFileUrl().then(url => {
+      if (url) {
+        return;
+      }
+
+      this.actions.performCommands();
     });
 
     this.formularEditorActions.load();

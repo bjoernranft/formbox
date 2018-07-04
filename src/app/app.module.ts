@@ -72,6 +72,7 @@ import { KomfortdruckComponent } from './components/komfortdruck/komfortdruck.co
 import { OnCreateDirective } from './directives/on-create.directive';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { composeWithDevTools } from 'remote-redux-devtools';
+import { FileSystemService } from './services/filesystem.service';
 
 @NgModule({
   declarations: [
@@ -140,7 +141,8 @@ import { composeWithDevTools } from 'remote-redux-devtools';
     SachleitendeverfuegungActions,
     SachleitendeverfuegungEpics,
     InitActions,
-    InitEpics
+    InitEpics,
+    FileSystemService
   ],
   bootstrap: [AppComponent]
 })
