@@ -8,7 +8,11 @@
   <div class="col-sm-12">
     <div class="panel-heading text-center column">Dokumente</div>
     <label class="btn btn-default">
-        &ouml;ffnen
+        &Ouml;ffnen
+        <input id="FileContentBase64" class="" type="file" (change)="openFile($event)" hidden/>
+      </label>
+      <label class="btn btn-default">
+        Vorlage &ouml;ffnen
         <input id="FileContentBase64" class="" type="file" (change)="openFile($event)" hidden/>
       </label>
     <tree-root [nodes]="documentTree | async" [options]="options" [focused]="true">
